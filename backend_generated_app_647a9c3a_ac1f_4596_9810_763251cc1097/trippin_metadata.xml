@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType HasStream="false" Name="Product">
+                <Key>
+                    <PropertyRef Name="Product_Id"/>
+                </Key>
+                <Property Name="Product_Id" Type="Edm.Int32"/>
+                <Property Name="ProductName" Type="Edm.String"/>
+                <Property Name="ProductDescription" Type="Edm.String"/>
+                <Property Name="ReturnMerchandiseAuthNotRequired" Type="Edm.Boolean"/>
+                <Property Name="ProductPrice" Type="Edm.Int32"/>
+                <Property Name="ProductColor" Type="Edm.String"/>
+                <Property Name="ProductSize" Type="Edm.Double"/>
+                <Property Name="CreatedDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="LastModifiedDate" Type="Edm.DateTimeOffset"/>
+                <NavigationProperty Name="ProductType" Type="Model.ProductType"/>
+                <NavigationProperty Name="ProductImage" Type="Model.Document"/>
+            </EntityType>
+            <EntityType HasStream="true" Name="Document">
+                <Key>
+                    <PropertyRef Name="Doc_Id"/>
+                </Key>
+                <Property Name="Doc_Id" Type="Edm.Int32"/>
+                <Property Name="FileType" Type="Edm.String"/>
+                <Property Name="FileName" Type="Edm.String"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="ProductType">
+                <Key>
+                    <PropertyRef Name="ProductTypeCode"/>
+                </Key>
+                <Property Name="ProductTypeCode" Type="Edm.Int32"/>
+                <Property Name="ProductTypeDescription" Type="Edm.String"/>
+                <Property Name="CreatedDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="LastModifiedDate" Type="Edm.DateTimeOffset"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Products" EntityType="Model.Product">
+                    <NavigationPropertyBinding Path="ProductType" Target="ProductTypes"/>
+                    <NavigationPropertyBinding Path="ProductImage" Target="Documents"/>
+                </EntitySet>
+                <EntitySet Name="Documents" EntityType="Model.Document"/>
+                <EntitySet Name="ProductTypes" EntityType="Model.ProductType"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
